@@ -13,12 +13,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //Math
         //Lam tron
-        Double a  = 1.99;
+        //Double a  = 1.99;
        // long a = Math.round(1.5);
         // lam tron len
         //double value1 = Math.ceil(a);
         //lam tron xuong
-        double value2 = Math.floor(a);
-        Log.d("BBB",String.valueOf(value2));
+        //double value2 = Math.floor(a);
+        //Log.d("BBB",String.valueOf(value2));
+        //can hai
+//        double b = 9;
+//        double value = Math.sqrt(b);
+//        Log.d("BBB",String.valueOf(value));
+        // tinh so max và min
+//        int a = 5;
+//        int b = 6;
+//        int value = Math.max(a,b);
+//        Log.d("BBB",String.valueOf(value));
+        double value = Math.floor(Math.random() * 6);
+        Log.d("BBB",String.valueOf(value));
     }
 }
