@@ -1,18 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
     <TextView
+        android:id="@+id/tvTitle"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="#f20"
+        android:textSize="50dp"
+        android:text="GAME LOTO"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content"/>
+   <EditText
+       android:imeOptions="actionNext"
+       android:maxLength="6"
+       android:id="@+id/editsomin"
+       android:hint="nhap so Min"
+       android:inputType="number"
+       android:layout_marginTop="30dp"
+       android:layout_below="@id/tvTitle"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"/>
+    <EditText
+        android:imeOptions="actionDone"
+        android:maxLength="6"
+        android:id="@+id/editsomax"
+        android:hint="nhap so Max"
+        android:inputType="number"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/editsomin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/random"
+        android:text="RANDOM"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/editsomax"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:textColor="#f20"
+        android:textSize="20dp"
+        android:layout_marginLeft="10dp"
+        tools:text="1-2-3-4-5-6-7"
+        android:id="@+id/tvketqua"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/random"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+
+
+</RelativeLayout>

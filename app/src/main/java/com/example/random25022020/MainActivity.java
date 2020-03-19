@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -29,7 +31,13 @@ public class MainActivity extends AppCompatActivity {
 //        int b = 6;
 //        int value = Math.max(a,b);
 //        Log.d("BBB",String.valueOf(value));
-        double value = Math.floor(Math.random() * 6);
-        Log.d("BBB",String.valueOf(value));
-    }
+//        double value = Math.floor(Math.random() * 6);
+//        Log.d("BBB",String.valueOf(value));
+//        Random random = new Random();
+//        for (int i = 0 ; i<100; i++) {
+//            int value = random.nextInt(7) - random.nextInt(7);
+//            Log.d("BBB", String.valueOf(value));
+//        }
+
+  }
 }
