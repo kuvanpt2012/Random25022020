@@ -34,12 +34,30 @@
         android:layout_below="@id/editsomin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/buttonAddBound"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_below="@id/editsomax"
+        android:text="Add Bound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+
+        android:layout_marginLeft="130dp"
+        android:id="@+id/btnReset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/buttonAddBound"
+        android:layout_above="@+id/random"
+        android:layout_centerHorizontal="true"
+        android:text="Reset" />
 
     <Button
         android:id="@+id/random"
         android:text="RANDOM"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="100dp"
         android:layout_below="@+id/editsomax"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

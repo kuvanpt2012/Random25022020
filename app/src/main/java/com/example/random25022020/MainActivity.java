@@ -3,7 +3,6 @@ package com.example.random25022020;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,74 +14,100 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
+    //    Các biến toàn cục (biến tạo một lần và không có sự thay đổi) tạo ở đây
     EditText mEdtSomin,mEdtSomax;
-    Button mBtnRandom;
+    Button mBtnRandom,mBtnReset,buttonAddBound;
     TextView mTvKetqua;
-    int mSmin,mSmax,mValue;
+    int mSmin,mSmax,mValue,mi;
     String mTextmin,mTextmax;
     Random mRandom;
     String mTvValue = ""; //cấp phát chuỗi rỗng k đc để null
+    final ArrayList<Integer> mArrayNumber = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        Ánh xạ (gán các biến đã tạo cho từng view bên activity_main.xml)
         mEdtSomax = findViewById(R.id.editsomax);
         mEdtSomin = findViewById(R.id.editsomin);
         mBtnRandom = findViewById(R.id.random);
         mTvKetqua = findViewById(R.id.tvketqua);
-        // khai báo mảng
-        ArrayList <Integer> arrayNumber = new ArrayList<>();
-
-        // thêm dữ liệu
-        arrayNumber.add(10);// index = 0
-        arrayNumber.add(9);//index = 1
-        arrayNumber.add(8); // index = 2
-        // lấy kích thước
-        //Log.d("BBB",String.valueOf(arrayNumber.size()));
-        // lấy giá trị phần tử theo vị trí.
-        //Log.d("BBB",String.valueOf(arrayNumber.get(0)));
-
-        // xóa
-       // arrayNumber.remove(0);
-        //Log.d("BBB",String.valueOf(arrayNumber.get(0)));
-
-        //sửa
-        arrayNumber.set(0,3);
-        Log.d("BBB",String.valueOf(arrayNumber.get(0)));
-
-
-
+        mBtnReset = findViewById(R.id.btnReset);
+        buttonAddBound = findViewById(R.id.buttonAddBound);
+//        Tạo phương thức onclick cho nút mBtnReset
+        mBtnReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Cú pháp hiện nút đã ẩn (mở khóa để có thể nhập liệu lại) ---(nút cần hiện).setEnabled(true)--
+                mEdtSomin.setEnabled(true);
+                mEdtSomax.setEnabled(true);
+                buttonAddBound.setEnabled(true);
+//                Cú pháp xóa dữ liệu trong mảng (dùng để xóa dữ liệu từ lần nhập trước)
+                mArrayNumber.clear();
+//                hàm ---(vị trí cần ghi đè).set.Text("nội dung cần ghi đè")--- dùng để ghi đè lên một nội dung đã được hiển thị từ trước đó. Ví dụ: ô somax đang chứa giá trị là 5, sử dụng hàm dươi đây sẽ thay thế số 5 bằng "" (chuỗi rỗng)
+                mTvKetqua.setText("");
+                mEdtSomin.setText("");
+                mEdtSomax.setText("");
+            }
+        });
+//        Tạo phương thức onclick nút AddBound
+        buttonAddBound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                hàm ---(vị trí cần lấy dữ liệu).get.Text().toString()--- dùng để lấy dữ liệu từ ô "Nhập số min" và "Nhập số max" mà người dùng đã nhập, dữ liệu lấy về ở dạng String.
+//                Tạm thời đặt một biến mới kiểu dữ liệu String để chứa dữ liệu lấy về.
+                mTextmin = mEdtSomin.getText().toString();
+                mTextmax = mEdtSomax.getText().toString();
+//                Tạo điều kiệu cho trường hợp người dùng nhập chuỗi rỗng (không nhập gì cả mà nhấn AddBound). Nếu người dùng nhập vào 1 trong 2 ô "Nhập số max" và "Nhập số min" là chuỗi rỗng thì hiện thông báo "Hãy Nhập Lại".
+                if (mTextmin.equals("") || mTextmax.equals("")) {
+                    Toast.makeText(MainActivity.this, "Hãy nhập lại!!!", Toast.LENGTH_SHORT).show(); //Phương thức Toast dùng để hiện dòng thông báo lên màn hình.
+                    return; // hàm return; dùng để kết thúc chương trình nếu người dùng nhập chuỗi rỗng
+                }
+//  hàm Interger.parseInt(biến cần chuyển đổi) dùng để chuyển kiểu dữ liệu khác sang Int.
+//  Vì mTextmin và mTextmax lấy được từ phương thức getText() bên trên là kiểu String (chuỗi) nên khi muốn sử dụng để tính toán +-x/ thì phải chuyển về kiểu Int (kiểu số).
+                mSmin = Integer.parseInt(mTextmin);
+                mSmax = Integer.parseInt(mTextmax);
+//  Sử dụng hàm if else hoặc toán từ 3 ngôi để xử lý trường hợp người dùng nhập số min >= số max.
+//  Nếu số min >= số max thì gán cho (số max = số min + 1) tức số max sẽ lớn hơn số min trở lại. Cú pháp toán tử 3 ngôi ---x = (điều kiện) ? (nếu điều kiện true thì x sẽ ...) : (nếu điều kiện false thì x sẽ...)---
+                mSmax = mSmin >= mSmax ? mSmin + 1 : mSmax;
+//Hàm set.Text tương tự như trên. Trường hợp này dùng để hiển thị lại số max mới trong trường hợp người dùng nhập số min > số max.
+// Ví dụ min = 5; max = 3, toán tử 3 ngôi trên sẽ tự động gắn lại cho max = 5 + 1 = 6.
+// Tuy nhiên tại ô "Nhập số max" sẽ vẫn hiển thị là 3 chứ không phải là 6, set.Text() chổ này sẽ đè số 6 của Số max lên số 3 của ô "Nhập số max", hiển thị lại ô "Nhập số max" giá trị 6 để đúng với giá trị.
+// Lưu ý trong setText phải là giá trị String (chuỗi), mà mSmax ở trên là số Int nên phải dùng String.valueOf() để chuyển về chuỗi.
+                mEdtSomax.setText(String.valueOf(mSmax));
+//                dùng vòng lặp để gán giá trị của dãy từ Số min đến Số max vào trong chuỗi
+                for (mi = mSmin; mi <= mSmax; mi++) {
+                    mArrayNumber.add(mi); //Hàm dùng để gán giá trị vào trong chuỗi
+                }
+//                Đoạn điều kiện if này dùng để disable (khóa khả năng nhập liệu của người dùng) tại các vị trí ô,nút mong muốn. Tương tự như trên nút Reset, khi nhấn nút Reset sẽ mở lại để người dùng nhập số min số max lại
+                if (mArrayNumber.size() > 0) {
+                    mEdtSomin.setEnabled(false); //Khóa nút nhập số min
+                    mEdtSomax.setEnabled(false); //Khóa nút nhập số max
+                    buttonAddBound.setEnabled(false); //Khóa nút AddBound
+//                    Phương thức Toaat Như trên, kiểm tra nếu người dùng nhập đúng thì thông báo nhập thành công, nhập sai chuỗi rỗng thì báo nhập thất bại.
+                    Toast.makeText(MainActivity.this, "Thêm số thành công", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainActivity.this, "Thêm số thất bại", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+//        Tạo Phương thức Onclick cho nút Random
         mBtnRandom.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                 mTextmin = mEdtSomin.getText().toString();
-                 mTextmax = mEdtSomax.getText().toString();
-                Log.d("BBB"," Text Min : " + mTextmin);
-                Log.d("BBB"," Text Max : " + mTextmax);
-
-                if (mTextmin.equals("")|| mTextmax.equals("")){
-                    Toast.makeText(MainActivity.this,"bạn nhập thiếu thông tin",Toast.LENGTH_SHORT).show();
-                    return;
+            public void onClick(View v) {
+//                Task 1: Tạo phương thức random, nếu như số đó được random rồi thì không được xuất hiện nữa
+                if (mArrayNumber.size() != 0) {
+                    mRandom = new Random(); //Khai báo phương thức Random
+                    mValue = mRandom.nextInt(mArrayNumber.size()); //Random trong khoảng chiều dài của chuỗi, đồng nghĩa với index của các số trong chuỗi hàm arraynumber.size() trả về độ dài của chuỗi
+                    mTvKetqua.append(mArrayNumber.get(mValue) + " - "); //Xuất giá trị trong chuỗi ra tương ứng với index vừa random được bên trên. hàm arratnumber.get(vị trí của chuỗi) trả về giá trị tại 1 index vừa random được (ở đây là mValue) để xuất ra giá trị tại index đó.
+                    mArrayNumber.remove(mValue); //Xóa đi index vừa xuất ra để đảm bảo không trùng, lặp lại nữa. hàm arraynumber.remove(index) dùng để xóa vị trí tại index vừa random được, đồng thời xóa luôn giá trị tại index đó, đảm bảo khi random không lặp lại giá trị đó nữa. Các index phía sau sẽ được đẩy lên để thế chỗ, chiều dài mảnh sẽ giảm đi 1
+//                Task 2: Nếu random hết số rồi thì thông báo "Hết số rồi" khi tiếp tục nhấn nút Random, khi hết số thì chiều dài chuỗi sẽ = 0, khi đó sẽ thông báo hết số
+                } else {
+                    Toast.makeText(MainActivity.this, "Hết số rồi!!!", Toast.LENGTH_SHORT).show();
                 }
-                 mSmin = Integer.parseInt(mTextmin);
-                 mSmax = Integer.parseInt(mTextmax);
-                //điều kiện if else
-                // if (smin > smax){
-                //   smax = smin + 1;
-//                  }
-
-                // viết điều kiện  theo toán tử 3 ngôi
-                mSmax = mSmin > mSmax ? mSmin + 1 : mSmax;
-                mEdtSomax.setText(String.valueOf(mSmax));
-                mRandom = new Random();
-                mValue = mRandom.nextInt(mSmax - mSmin + 1 ) + mSmin;
-                mTvValue += mValue + " - ";
-                mTvKetqua.setText(mTvValue);
-
             }
-
         });
 
-  }
+    }
 }
